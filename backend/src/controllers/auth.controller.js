@@ -56,14 +56,14 @@ export const login = async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: "Please enter the correct email" })
         }
-        
+
         const isPass = await bycrypt.compare(password, user.password)
-        
-        if(!isPass){
+
+        if (!isPass) {
             return res.status(400).json({ message: "Please enter the correct password" })
         }
 
-        webToken(user._id,res)
+        webToken(user._id, res)
 
         res.status(201).json({
             _id: user._id,
@@ -75,10 +75,24 @@ export const login = async (req, res) => {
 
     } catch (error) {
         console.log("Error Message : ", error)
-        res.status(500).json({message:'There is an internal error'})
+        res.status(500).json({ message: 'There is an internal error' })
     }
 }
 
 export const logout = (req, res) => {
-    res.send('Logout route')
+    try {
+        res.cookie("jwt", "", { maxAge: 0 })
+        return res.status(200).json({message:'Log out successfully'});
+    } catch (error) {
+        console.log("Error message ", error)
+        return res.status(500).json({message:'Error occured'});
+    }
+}
+
+export const updateProfile = (req,res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
 }
